@@ -8,4 +8,9 @@ class Auth extends \IonAuth\Controllers\Auth
      *  - remove comment
      */
     protected $viewsFolder = 'auth';
+    public function index()
+	{
+		$data = array('title'=>"Pos Umkm");
+		return view('main_login',$data);
+	}
 }
