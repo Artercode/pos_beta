@@ -20,7 +20,9 @@ class Pembelian_model extends Model
 
     function getLastNotaPembelian()
     {
-        $builder->select('(SELECT ', FALSE);
+        $builder->select('master_pembelian');
+        $builder->orderby('kd_trx_pembelian','DESC');
+        $builder->limit(1);
         $query = $builder->get();
         return $query;
     }

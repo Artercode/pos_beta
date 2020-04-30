@@ -70,7 +70,7 @@
 		</div><!-- /.pull-left -->
 	</div><!-- /.ace-settings-box -->
 </div><!-- /.ace-settings-container -->
-
+<?= print_r($nota_pembelian); ?>
 <div class="breadcrumbs ace-save-state" id="breadcrumbs">
 	<ul class="breadcrumb">
 		<li>
