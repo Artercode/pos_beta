@@ -22,6 +22,9 @@ class App extends BaseConfig
 	|
 	*/
 	public $baseURL = 'http://localhost/ci-pos-umkm/';
+// 	$config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
+// $config['base_url'] .= "://" . $_SERVER['HTTP_HOST'];
+// $config['base_url'] .= str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
 	// 'http://localhost/ci-pos-umkm/public';
 //http://localhost:8080/
 	/*
@@ -34,7 +37,7 @@ class App extends BaseConfig
 	| variable so that it is blank.
 	|
 	*/
-	public $indexPage = 'index.php';
+	public $indexPage = '';
 
 	/*
 	|--------------------------------------------------------------------------
