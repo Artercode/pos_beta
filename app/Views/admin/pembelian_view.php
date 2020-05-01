@@ -71,17 +71,9 @@
 	<ul class="breadcrumb">
 		<li>
 			<i class="ace-icon fa fa-home home-icon"></i>
-			<a href="#">Home</a>
+			<a href="#">Admin</a>
 		</li>
-
-		<li>
-			<a href="#">UI &amp; Elements</a>
-		</li>
-
-		<li>
-			<a href="#">Layouts</a>
-		</li>
-		<li class="active">Default Mobile Menu</li>
+		<li class="active">Pembelian</li>
 	</ul><!-- /.breadcrumb -->
 
 	<div class="nav-search" id="nav-search">
@@ -298,6 +290,7 @@
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<!-- End Bootstrap modal -->
 <div class="modal fade " id="modal_addproduk" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -310,26 +303,48 @@
 					<input type="hidden" value="" name="id" />
 					<div class="form-body">
 						<div class="form-group">
-							<label class="control-label col-md-3">Produk</label>
+							<label class="control-label col-md-3">Kode Barcode</label>
 							<div class="col-md-9">
-								<input name="add_produk" disabled id="add_produk" class="form-control" type="number">
+								<input name="add_kodeproduk_barcode" id="add_kodeproduk_barcode" class="form-control" type="text">
+								<span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Kode Produk</label>
+							<div class="col-md-9">
+								<input name="add_kodeproduk" id="add_kodeproduk" class="form-control" type="text">
+								<span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Nama Produk</label>
+							<div class="col-md-9">
+								<input name="add_produk" id="add_produk" class="form-control" type="text">
 								<span class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-md-3">Harga Eceran</label>
 							<div class="col-md-9">
-								<input name="add_harga" disabled id="add_harga" class="form-control" type="number">
+								<input name="add_harga" id="add_harga" class="form-control" type="number">
 								<span class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-3">Qty</label>
+							<label class="control-label col-md-3">Harga Grosir</label>
 							<div class="col-md-9">
-								<input name="qty" id="qty" class="form-control" type="number">
+								<input name="add_harga_grosir" id="add_harga_grosir" class="form-control" type="number">
 								<span class="help-block"></span>
 							</div>
 						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Minimal Qty Grosir</label>
+							<div class="col-md-9">
+								<input name="add_qtymin_grosir" id="add_qtymin_grosir" class="form-control" type="number">
+								<span class="help-block"></span>
+							</div>
+						</div>
+
 					</div>
 				</form>
 			</div>
@@ -340,8 +355,6 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div>
-<!-- End Bootstrap modal -->
-
 <?= $this->endSection() ?>
 <? $this->section('jscript') ?>
 
@@ -369,7 +382,7 @@
 		$('.form-group').removeClass('has-error'); // clear error class
 		$('.help-block').empty(); // clear error string
 		$('#modal_form').modal('show'); // show bootstrap modal
-		$('.modal-title').text('Transaksi Pembelian'); // Set Title to Bootstrap modal title
+		$('#modal_form .modal-title').text('Transaksi Pembelian'); // Set Title to Bootstrap modal title
 	}
 
 	function add_produk() {

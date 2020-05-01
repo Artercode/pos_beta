@@ -17,7 +17,7 @@ class Pembelian extends BaseController
 	{
 
 		$model = new Pembelian_model();
-		$mpos= new Pos();
+		$mpos = new Pos();
 		helper('TimeHelper');
 		helper('Umkm');
 
@@ -70,16 +70,18 @@ class Pembelian extends BaseController
 		$dataProduk = $model->getDataProdukBySearch($searchby)->getRow();
 
 		// print_r($something);
-		echo '<div class="form-group">
-		<label class="control-label col-md-3">Harga</label>
-		<div class="col-md-9">
-			<input name="harga" disabled id="harga" class="form-control" value="'.$dataProduk->harga_eceran.'" type="number">
-			<span class="help-block"></span>
-		</div>
+		echo '
 		<div class="form-group">
 		<label class="control-label col-md-3">Harga</label>
-		<div class="col-md-9">
-			<input name="stok" disabled id="stok" class="form-control" value="'.$dataProduk->stok.'" type="number">
+			<div class="col-md-9">
+				<input name="harga" disabled id="harga" class="form-control" value="' . $dataProduk->harga_eceran . '" type="number">
+				<span class="help-block"></span>
+			</div>
+		</div>
+		<div class="form-group">
+		<label class="control-label col-md-3">Sisa Stok</label>
+		<div class="col-md-2">
+			<input name="stok" disabled id="stok" class="form-control" value="" type="number">
 			<span class="help-block"></span>
 		</div>
 	</div>';

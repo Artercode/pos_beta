@@ -71,17 +71,9 @@
 	<ul class="breadcrumb">
 		<li>
 			<i class="ace-icon fa fa-home home-icon"></i>
-			<a href="#">Home</a>
+			<a href="#">Admin</a>
 		</li>
-
-		<li>
-			<a href="#">UI &amp; Elements</a>
-		</li>
-
-		<li>
-			<a href="#">Layouts</a>
-		</li>
-		<li class="active">Default Mobile Menu</li>
+		<li class="active">Produk</li>
 	</ul><!-- /.breadcrumb -->
 
 	<div class="nav-search" id="nav-search">
