@@ -32,6 +32,7 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 $routes->get('/pembelian', 'Pembelian::index');
+$routes->get('/produk', 'Produk::index');
 $routes->group('auth', ['namespace' => 'IonAuth\Controllers'], function ($routes) {
 	$routes->get('/', 'Auth::index');
 	$routes->add('login', 'Auth::login');

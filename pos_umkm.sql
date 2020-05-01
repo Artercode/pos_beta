@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 30, 2020 at 05:42 AM
+-- Generation Time: May 01, 2020 at 03:33 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.3.16
 
@@ -256,16 +256,32 @@ CREATE TABLE `master_produk` (
   `harga_grosir` double NOT NULL DEFAULT 0,
   `eceran` int(5) NOT NULL,
   `harga_eceran` double NOT NULL DEFAULT 0,
+  `created_date` date NOT NULL DEFAULT current_timestamp(),
   `create_by` int(5) NOT NULL,
-  `keterangan` text NOT NULL
+  `modified_by` int(5) DEFAULT NULL,
+  `keterangan` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `master_produk`
 --
 
-INSERT INTO `master_produk` (`kd_produk`, `kd_barcode`, `nama_produk`, `id_kategori`, `promo`, `harga_promo`, `gambar_produk`, `kd_satuan`, `batas_grosir`, `harga_grosir`, `eceran`, `harga_eceran`, `create_by`, `keterangan`) VALUES
-('BRS0001', '13131313131', 'Beras Bramo 25Kg', 1, 0, 0, '-', 1, 10, 55000, 1, 58000, 1, 'Beras Kualitas bramo 25kg');
+INSERT INTO `master_produk` (`kd_produk`, `kd_barcode`, `nama_produk`, `id_kategori`, `promo`, `harga_promo`, `gambar_produk`, `kd_satuan`, `batas_grosir`, `harga_grosir`, `eceran`, `harga_eceran`, `created_date`, `create_by`, `modified_by`, `keterangan`) VALUES
+('BRS0001', '13131313131', 'Beras Bramo 25Kg', 1, 0, 0, '-', 1, 10, 55000, 1, 58000, '2020-05-01', 1, 0, 'Beras Kualitas bramo 25kg');
+
+--
+-- Triggers `master_produk`
+--
+DELIMITER $$
+CREATE TRIGGER `before_produk_update` AFTER UPDATE ON `master_produk` FOR EACH ROW BEGIN
+    INSERT INTO trx_history_harga_jual
+    set kd_produk = OLD.kd_produk,
+    harga=new.harga_eceran,
+    modified_by = new.modified_by,
+    tanggal_modified = CURDATE();
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -451,12 +467,19 @@ INSERT INTO `tb_kemasan` (`id`, `kd_kemasan`, `nama`) VALUES
 
 CREATE TABLE `trx_history_harga_jual` (
   `id_history_jual` int(10) NOT NULL,
-  `kd_produk` int(50) NOT NULL,
+  `kd_produk` varchar(50) NOT NULL,
   `harga` double NOT NULL,
   `tanggal_modified` datetime NOT NULL DEFAULT current_timestamp(),
-  `keterangan` text NOT NULL,
-  `create_by` int(5) NOT NULL COMMENT 'user yang merubah'
+  `keterangan` text DEFAULT NULL,
+  `modified_by` int(5) DEFAULT NULL COMMENT 'user yang merubah'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `trx_history_harga_jual`
+--
+
+INSERT INTO `trx_history_harga_jual` (`id_history_jual`, `kd_produk`, `harga`, `tanggal_modified`, `keterangan`, `modified_by`) VALUES
+(1, 'BRS0001', 58000, '2020-05-01 00:00:00', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -801,7 +824,7 @@ ALTER TABLE `tb_kemasan`
 -- AUTO_INCREMENT for table `trx_history_harga_jual`
 --
 ALTER TABLE `trx_history_harga_jual`
-  MODIFY `id_history_jual` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_history_jual` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `trx_pembelian`

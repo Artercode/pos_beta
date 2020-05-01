@@ -15,7 +15,11 @@ class Umkm
      */
     public function getNotaPembelian($last_nota = null)
     {
-       
+        if ($last_nota = null) {
+            return date('ymmddHi');
+        } else {
+            return date('ymmddHi');
+        }
     }
 
     /**
@@ -23,6 +27,5 @@ class Umkm
      */
     public function getNotaPenjualan($last_nota = null)
     {
-       
     }
 }

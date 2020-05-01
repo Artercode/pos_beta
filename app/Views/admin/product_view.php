@@ -95,14 +95,14 @@
 </div>
 <div class="row">
 	<div class="page-header">
-		<h1>Pembelian</h1>
+		<h1>Produk</h1>
 	</div><!-- /.page-header -->
 
 	<div class="col-xs-12">
 		<!-- PAGE CONTENT BEGINS -->
 		<div class="row" style="margin-bottom: 10px;">
 			<div class="col-xs-8">
-				<button class="btn btn-app btn-success btn-xs" onclick="add_person()">
+				<button class="btn btn-app btn-success btn-xs" onclick="add_produk()">
 					<i class="ace-icon fa fa-plus align-top bigger-125"></i>
 					Tambah
 			</div>
@@ -122,9 +122,13 @@
 								</label>
 							</th> -->
 							<th style="width:3px">No</th>
-							<th style="width:100px">No Nota</th>
-							<th>Total Nota</th>
-							<th>Tanggal</th>
+							<th style="width:3px">Kode Produk</th>
+							<th>Nama Produk</th>
+							<th style="width:3px">Harga Eceran</th>
+							<th style="width:3px">Harga Grosir</th>
+							<th style="width:3px">Minimum Grosir</th>
+							<th width="10%">Tanggal Buat</th>
+							<th>Keterangan</th>
 							<th style="width:100px">
 								<i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
 								Action
@@ -134,16 +138,20 @@
 					</thead>
 
 					<tbody>
-						<?php if ($m_pembelian) : ?>
+						<?php if ($produk) : ?>
 							<?php
 							$no = 1;
-							foreach ($m_pembelian as $mbeli) : ?>
+							foreach ($produk as $mbeli) : ?>
 								<tr>
 									<td><?php echo $no; ?></td>
-									<td><?php echo $mbeli['kd_trx_pembelian']; ?></td>
-									<td><?php echo $mbeli['total_pembelian']; ?></td>
-									<td><?php echo date("d-m-Y", strtotime($mbeli['created_date'])); ?></td>
-									<td>
+									<td><?php echo $mbeli->kd_produk; ?></td>
+									<td><?php echo $mbeli->nama_produk; ?></td>
+									<td><?php echo $mbeli->harga_eceran; ?></td>
+									<td><?php echo $mbeli->harga_grosir; ?></td>
+									<td><?php echo $mbeli->batas_grosir; ?></td>
+									<td><?php echo date("d-m-Y", strtotime($mbeli->created_date)); ?></td>
+									<td><?php echo $mbeli->keterangan; ?></td>
+									<td></td>
 								</tr>
 							<?php
 								$no++;
@@ -155,7 +163,7 @@
 					<div class="col-xs-12">
 						<div class="row">
 							<?php if ($pager) : ?>
-								<?php $pagi_path = 'pos_beta/public/pembelian'; ?>
+								<?php $pagi_path = 'pos_beta/produk'; ?>
 								<?php $pager->setPath($pagi_path); ?>
 								<?= $pager->links() ?>
 							<?php endif ?>
@@ -165,7 +173,6 @@
 			</div><!-- /.span -->
 		</div><!-- /.row -->
 
-		<input type="hidden" name="nota_pembelian" id="nota_pembelian" value="<?= $nota_pembelian; ?>" />
 		<div class="hr hr-18 dotted hr-double"></div>
 
 
@@ -174,129 +181,6 @@
 </div><!-- /.row -->
 <!-- inline scripts related to this page -->
 <!-- Bootstrap modal -->
-<div class="modal fade " id="modal_form" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h3 class="modal-title">Person Form</h3>
-			</div>
-			<div class="modal-body form">
-				<div id="no_nota">
-				</div>
-				<!-- <h4>Nomor Nota :</h4> -->
-				<form action="#" id="form" class="form-horizontal">
-					<input type="hidden" value="" name="id" />
-					<div class="form-body">
-						<label class="control-label col-md-3">Produk</label>
-
-						<div class="form-group">
-							<div class="col-md-7">
-								<select onchange="showBarang(this.value)" autocomplete="off" id="id_barang" name="id_barang" required="true" class="form-control chosen-select" id="form-field-select-3" data-placeholder="Cari Produk...">
-									<?php if ($produk) : ?>
-										<?php
-										$no = 1;
-										foreach ($produk->getResult('array')  as $row) { ?>
-											<option value=""> </option>
-											<option value="<?= $row['kd_produk'] ?>"><?= $row['nama_produk'] ?></option>
-										<?php $no++;
-										} ?>
-									<?php endif; ?>
-								</select>
-								<button type="button" id="btnSave" onclick="add_produk()" class="btn btn-white btn-info btn-bold">
-									<i class="ace-icon glyphicon-plus bigger-120 blue"></i>
-									Produk
-								</button>
-								<!-- <button type="button" id="btnSave" onclick="save()" class="btn btn-primary">+ Produk</button> -->
-							</div>
-							<!-- <div class="col-md" -->
-						</div>
-						<!-- <div class="form-group">
-							<label class="control-label col-md-3">Kategori</label>
-							<div class="col-md-9">
-								<input name="lastName" placeholder="Last Name" class="form-control" type="text">
-								<span class="help-block"></span>
-							</div>
-						</div> -->
-						<div id="data_produk">
-							<div class="form-group">
-								<label class="control-label col-md-3">Harga</label>
-								<div class="col-md-9">
-									<input name="harga" disabled id="harga" class="form-control" type="number">
-									<span class="help-block"></span>
-								</div>
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label class="control-label col-md-3">Qty</label>
-							<div class="col-md-9">
-								<input name="qty" id="qty" class="form-control" type="number">
-								<span class="help-block"></span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-3">Potongan</label>
-							<div class="col-md-9">
-								<input name="diskon" id="diskon" class="form-control" type="number">
-								<span class="help-block"></span>
-							</div>
-						</div>
-						<!-- <div class="form-group">
-							<label class="control-label col-md-3">Gender</label>
-							<div class="col-md-9">
-								<select name="gender" class="form-control">
-									<option value="">--Select Gender--</option>
-									<option value="male">Male</option>
-									<option value="female">Female</option>
-								</select>
-								<span class="help-block"></span>
-							</div>
-						</div> -->
-						<div class="form-group">
-							<label class="control-label col-md-3">Keterangan</label>
-							<div class="col-md-9">
-								<textarea name="address" placeholder="Address" class="form-control"></textarea>
-								<span class="help-block"></span>
-							</div>
-						</div>
-
-						<table id="table" class="table table-striped table-bordered" cellspacing="0" width="100%">
-							<thead>
-								<tr>
-									<th style="width:3px">No</th>
-									<th>Kode Produk</th>
-									<th>Nama Produk</th>
-									<th>Harga</th>
-									<th>Qty</th>
-									<th>Sub Total</th>
-									<th>Action</th>
-								</tr>
-							</thead>
-							<tbody>
-							</tbody>
-
-							<!-- <tfoot>
-								<tr>
-									<th>First Name</th>
-									<th>Last Name</th>
-									<th>Gender</th>
-									<th>Address</th>
-									<th>Date of Birth</th>
-									<th>Action</th>
-								</tr>
-							</tfoot> -->
-						</table>
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" id="btnSave" onclick="save()" class="btn btn-primary">Save</button>
-				<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 <div class="modal fade " id="modal_addproduk" role="dialog">
 	<div class="modal-dialog">
@@ -310,26 +194,48 @@
 					<input type="hidden" value="" name="id" />
 					<div class="form-body">
 						<div class="form-group">
-							<label class="control-label col-md-3">Produk</label>
+							<label class="control-label col-md-3">Kode Barcode</label>
 							<div class="col-md-9">
-								<input name="add_produk" disabled id="add_produk" class="form-control" type="number">
+								<input name="add_kodeproduk_barcode" id="add_kodeproduk_barcode" class="form-control" type="text">
+								<span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Kode Produk</label>
+							<div class="col-md-9">
+								<input name="add_kodeproduk" id="add_kodeproduk" class="form-control" type="text">
+								<span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Nama Produk</label>
+							<div class="col-md-9">
+								<input name="add_produk" id="add_produk" class="form-control" type="text">
 								<span class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-md-3">Harga Eceran</label>
 							<div class="col-md-9">
-								<input name="add_harga" disabled id="add_harga" class="form-control" type="number">
+								<input name="add_harga" id="add_harga" class="form-control" type="number">
 								<span class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-3">Qty</label>
+							<label class="control-label col-md-3">Harga Grosir</label>
 							<div class="col-md-9">
-								<input name="qty" id="qty" class="form-control" type="number">
+								<input name="add_harga_grosir" id="add_harga_grosir" class="form-control" type="number">
 								<span class="help-block"></span>
 							</div>
 						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Minimal Qty Grosir</label>
+							<div class="col-md-9">
+								<input name="add_qtymin_grosir" id="add_qtymin_grosir" class="form-control" type="number">
+								<span class="help-block"></span>
+							</div>
+						</div>
+
 					</div>
 				</form>
 			</div>
@@ -373,7 +279,6 @@
 	}
 
 	function add_produk() {
-		$('#modal_form').modal('hide');
 		$('#modal_addproduk').modal('show');
 	}
 
