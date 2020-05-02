@@ -59,6 +59,11 @@ class Pembelian extends BaseController
 	{
 	}
 
+	public function addBeliTemp()
+	{
+		
+	}
+
 	/**
 	 * Menampilkan produk sesuai pencarian
 	 * return nama,harga beli terakhir 
@@ -67,21 +72,26 @@ class Pembelian extends BaseController
 	{
 		// $something = $this->request->getVar('foo');
 		$model = new Pos();
+		$mbeli = new Pembelian_model();
 		$dataProduk = $model->getDataProdukBySearch($searchby)->getRow();
+		$hbeliterakhir = $mbeli->getHargaBeliTerakhir($searchby)->getRow();
 
 		// print_r($something);
 		echo '
 		<div class="form-group">
-		<label class="control-label col-md-3">Harga</label>
+		<label class="control-label col-md-3">Harga Beli Terakhir</label>
 			<div class="col-md-9">
-				<input name="harga" disabled id="harga" class="form-control" value="' . $dataProduk->harga_eceran . '" type="number">
+				<input name="harga" disabled id="harga" class="form-control" value="' . $hbeliterakhir->harga . '" type="number">
 				<span class="help-block"></span>
 			</div>
 		</div>
+
+		<input type="hidden" name="nama_produk" id="nama_produk" value="'.$dataProduk->nama_produk.'"/>
+		<input type="hidden" name="tot_stok" id="tot_stok" value="'.$dataProduk->stok.'"/>
 		<div class="form-group">
 		<label class="control-label col-md-3">Sisa Stok</label>
 		<div class="col-md-2">
-			<input name="stok" disabled id="stok" class="form-control" value="" type="number">
+			<input name="stok" disabled id="stok" class="form-control" value="'.$dataProduk->stok.'" type="number">
 			<span class="help-block"></span>
 		</div>
 	</div>';

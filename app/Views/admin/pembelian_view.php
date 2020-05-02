@@ -136,6 +136,54 @@
 									<td><?php echo $mbeli['total_pembelian']; ?></td>
 									<td><?php echo date("d-m-Y", strtotime($mbeli['created_date'])); ?></td>
 									<td>
+										<div class="hidden-sm hidden-xs action-buttons">
+											<a class="blue" href="#">
+												<i class="ace-icon fa fa-search-plus bigger-130"></i>
+											</a>
+
+											<a class="green" href="#">
+												<i class="ace-icon fa fa-pencil bigger-130"></i>
+											</a>
+
+											<a class="red" href="#">
+												<i class="ace-icon fa fa-trash-o bigger-130"></i>
+											</a>
+										</div>
+
+										<div class="hidden-md hidden-lg">
+											<div class="inline pos-rel">
+												<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+													<i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+												</button>
+
+												<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+													<li>
+														<a href="#" class="tooltip-info" data-rel="tooltip" title="" data-original-title="View">
+															<span class="blue">
+																<i class="ace-icon fa fa-search-plus bigger-120"></i>
+															</span>
+														</a>
+													</li>
+
+													<li>
+														<a href="#" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit">
+															<span class="green">
+																<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+															</span>
+														</a>
+													</li>
+
+													<li>
+														<a href="#" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete">
+															<span class="red">
+																<i class="ace-icon fa fa-trash-o bigger-120"></i>
+															</span>
+														</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</td>
 								</tr>
 							<?php
 								$no++;
@@ -183,7 +231,7 @@
 						<label class="control-label col-md-3">Produk</label>
 
 						<div class="form-group">
-							<div class="col-md-7">
+							<div class="col-md-6">
 								<select onchange="showBarang(this.value)" autocomplete="off" id="id_barang" name="id_barang" required="true" class="form-control chosen-select" id="form-field-select-3" data-placeholder="Cari Produk...">
 									<?php if ($produk) : ?>
 										<?php
@@ -195,6 +243,7 @@
 										} ?>
 									<?php endif; ?>
 								</select>
+
 								<button type="button" id="btnSave" onclick="add_produk()" class="btn btn-white btn-info btn-bold">
 									<i class="ace-icon glyphicon-plus bigger-120 blue"></i>
 									Produk
@@ -211,6 +260,8 @@
 							</div>
 						</div> -->
 						<div id="data_produk">
+
+						<input type="hidden" name="tot_stok" id="tot_stok" value=""/>
 							<div class="form-group">
 								<label class="control-label col-md-3">Harga</label>
 								<div class="col-md-9">
@@ -219,7 +270,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="form-group">
 							<label class="control-label col-md-3">Qty</label>
 							<div class="col-md-9">
